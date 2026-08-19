@@ -42,29 +42,29 @@ class Board:
         return res
 
 
-    def get_neighbours(self,tile):
+    def get_neighbours_ind(self,tile):
         x,y,z = self.tile_to_xyz(tile)
         res = []
         if(y!=1):
             if(x==1):
-                res.append(self.board[self.xyz_to_tile(0,y,z)])
-                res.append(self.board[self.xyz_to_tile(2,y,z)])
+                res.append(self.xyz_to_tile(0,y,z))
+                res.append(self.xyz_to_tile(2,y,z))
             else:
-                res.append(self.board[self.xyz_to_tile(1,y,z)])
+                res.append(self.xyz_to_tile(1,y,z))
 
         if(x!=1):
             if(y==1):
-                res.append(self.board[self.xyz_to_tile(x,0,z)])
-                res.append(self.board[self.xyz_to_tile(x,2,z)])
+                res.append(self.xyz_to_tile(x,0,z))
+                res.append(self.xyz_to_tile(x,2,z))
             else:
-                res.append(self.board[self.xyz_to_tile(x,1,z)])
+                res.append(self.xyz_to_tile(x,1,z))
                 
         elif(x==1 or y==1):
             if(z==1):
-                res.append(self.board[self.xyz_to_tile(x,y,0)])
-                res.append(self.board[self.xyz_to_tile(x,y,2)])
+                res.append(self.xyz_to_tile(x,y,0))
+                res.append(self.xyz_to_tile(x,y,2))
             else:
-                res.append(self.board[self.xyz_to_tile(x,y,1)])
+                res.append(self.xyz_to_tile(x,y,1))
         return res
 
                 
@@ -88,11 +88,36 @@ class Board:
         
 
     def xyz_to_tile(self, x,y,z):
-        if(x==2 and z == 2):
+        if(x==1 and y == 1):
             print("tile does not exist")
         temp = [[0,7,6],[1,-1,5],[2,3,4]]
 
         return 8*z + temp[x][y]
+
+    #
+    def get_possible_moves_place(self):
+        return self.get_tiles(0)
+    def get_possible_moves_delete(self, whose):
+        return self.get_tiles(whose)
+    def get_possible_moves_move(self, whose_turn):
+        res = []
+        Froms = self.get_tiles(whose_turn)
+        for From in Froms:
+            Tos = self.get_neighbours_ind(From)
+            for To in Tos:
+                if(self.board[To] == 0):
+                    res.append([From, To])
+        return res
+
+
+
+    def get_tiles(self, num):
+        res = []
+        for ind, tile in enumerate(self.board):
+            if(tile == num):
+                res.append(ind)
+        return res
+
             
 
         

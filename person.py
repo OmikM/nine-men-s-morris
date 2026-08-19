@@ -5,10 +5,12 @@ class Person:
     def place_pawn(self,board):
         board.print_board()
         return int(input("where do you want to place pawn? "))
-    def delete_pawn(self, board):
+    def delete_pawn(self, board,whose):
         board.print_board()
         return int(input("witch opponent's pawn do you want to delete? "))
     def move_pawn(self,board):
-            return self.helper(),self.helper()
+            From = int(input("witch pawn do you want to move?"))
+            To = int(input("witch where do you want to move it?"))
+            return From, To
 
         

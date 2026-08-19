@@ -18,9 +18,7 @@ class Game:
         else:
             move = self.player_2.place_pawn(self.board)
 
-        if(move not in range(24)):
-            return self.place_pawn()
-        if(self.board.board[move]!= 0):
+        if (move not in self.board.get_possible_moves_place()):
             return self.place_pawn()
 
 
@@ -36,16 +34,14 @@ class Game:
         return move
     
     # whose pawn should be removed
-    def delete_pawn(self):
+    def delete_pawn(self, whose):
         if(self.whose_turn == 1):
-            move = self.player_1.delete_pawn(self.board)
+            move = self.player_1.delete_pawn(self.board,whose)
         else:
-            move = self.player_2.delete_pawn(self.board)
-        if(move not in range(24)):
-            return self.delete_pawn()
-        if(self.board.board[move]!= 3-self.whose_turn):
-            # Error tried to delete your pawn
-            return self.delete_pawn()
+            move = self.player_2.delete_pawn(self.board,whose)
+
+        if(move not in self.board.get_possible_moves_delete(whose)):
+            return self.delete_pawn(whose)
 
         print(move)
         
@@ -64,11 +60,7 @@ class Game:
         else:
             From, To = self.player_2.move_pawn(self.board)
 
-        if(self.board.board[From] != self.whose_turn):
-            return self.move_pawn()
-        if(self.board.board[To]!=0):
-            return self.move_pawn()
-        if(To not in self.board.get_neighbours(From)):
+        if([From, To] not in self.board.get_possible_moves_move(self.whose_turn)):
             return self.move_pawn()
         
         print(From)
@@ -86,7 +78,7 @@ class Game:
 
         mill = self.board.get_mill(ax, tile)
         if(mill[0]*mill[1]*mill[2] == 1 or mill[0]*mill[1]*mill[2] == 8):
-            self.delete_pawn()
+            self.delete_pawn(3-self.whose_turn)
             
         if ax==0:
             self.is_new_mill(tile,1)

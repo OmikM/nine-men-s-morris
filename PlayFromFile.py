@@ -16,7 +16,7 @@ class PlayFromFile:
 
     def place_pawn(self,board):
         return self.helper()
-    def delete_pawn(self, board):
+    def delete_pawn(self, board,whose):
         return self.helper()
     def move_pawn(self,board):
         return self.helper(),self.helper()
