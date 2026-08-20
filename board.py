@@ -1,6 +1,7 @@
 class Board:
     def __init__(self):
         self.board = [0] * 24
+        last_move = []
 
     def print_board(self):
         temp = [[0,"_","_",1,"_", "_",2],

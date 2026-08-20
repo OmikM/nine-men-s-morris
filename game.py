@@ -94,7 +94,8 @@ class Game:
                 tile = self.place_pawn()
             else:
                 tile = self.move_pawn()
-            
+
+            #self.board.last_move.append(tile)
             self.is_new_mill(tile)
 
 
